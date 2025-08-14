@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState, useCallback } from 'react';
@@ -40,6 +39,14 @@ function DashboardContent() {
     setSubLoading(true);
     try {
       const subData = await getSubscription(user.uid);
+      // معالجة renewalDate لتصبح Date صحيحة
+      if (subData.renewalDate) {
+        if (typeof subData.renewalDate === 'number') {
+          subData.renewalDate = new Date(subData.renewalDate);
+        } else if ('seconds' in subData.renewalDate) {
+          subData.renewalDate = new Date(subData.renewalDate.seconds * 1000);
+        }
+      }
       setSubscription(subData);
     } catch (error) {
       console.error("Error fetching subscription:", error);
@@ -83,7 +90,6 @@ function DashboardContent() {
 
   const validTabs = availableTools.map(t => t.id);
   const [activeToolId, setActiveToolId] = useState(validTabs[0]);
-
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
