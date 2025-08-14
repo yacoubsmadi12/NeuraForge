@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useCallback } from "react";
@@ -52,8 +51,14 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
     disabled: isLoading,
   });
 
+  // دالة التحقق من إمكانية استخدام الأداة
   const canUseTool = () => {
     if (!subscription) return false;
+
+    // إذا كان الحد غير محدود (Yearly/Monthly المدفوعة)
+    if (subscription.limit === Infinity) return true;
+
+    // إذا الخطة مجانية أو محدودة
     const usage = subscription.usage[toolId] || 0;
     return usage < subscription.limit;
   }
@@ -73,7 +78,7 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
 
     try {
       await incrementSubscriptionUsage(user.uid, toolId);
-      refreshSubscription();
+      await refreshSubscription();
       const result = await editImage({ prompt, photoDataUri: sourceImage });
       if (result.imageUrl) {
         setEditedImage(result.imageUrl);
@@ -87,7 +92,7 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
       setIsLoading(false);
     }
   };
-  
+
   const handleDownload = () => {
     if (!editedImage) return;
     const link = document.createElement("a");
@@ -107,25 +112,24 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
         <CardDescription>{t('dashboard.editImage.description')}</CardDescription>
       </CardHeader>
       <CardContent>
-         {showUpgradeAlert && (
+        {showUpgradeAlert && (
           <Alert variant="premium" className="mb-4">
             <AlertTriangle className="h-4 w-4" />
             <AlertTitle>{t('dashboard.upgrade.title')}</AlertTitle>
             <AlertDescription className="flex items-center justify-between">
-               <span>{t('dashboard.upgrade.description')}</span>
+              <span>{t('dashboard.upgrade.description')}</span>
               <Button onClick={() => router.push('/subscriptions')} size="sm">{t('dashboard.upgrade.button')}</Button>
             </AlertDescription>
           </Alert>
         )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           {/* Source Image */}
           <div className="flex flex-col gap-2">
-             <h3 className="text-sm font-medium text-muted-foreground">{t('dashboard.editImage.sourceImage')}</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">{t('dashboard.editImage.sourceImage')}</h3>
             <div
               {...getRootProps()}
-              className={`aspect-square w-full rounded-lg border-2 border-dashed flex items-center justify-center text-center p-4 transition-colors ${
-                isDragActive ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
-              } ${sourceImage ? "" : "cursor-pointer"} ${showUpgradeAlert ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`aspect-square w-full rounded-lg border-2 border-dashed flex items-center justify-center text-center p-4 transition-colors ${isDragActive ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"} ${sourceImage ? "" : "cursor-pointer"} ${showUpgradeAlert ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <input {...getInputProps()} disabled={showUpgradeAlert || isLoading} />
               {sourceImage ? (
@@ -139,12 +143,12 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
                 </div>
               )}
             </div>
-             {sourceImage && <Button variant="outline" size="sm" onClick={() => setSourceImage(null)} disabled={isLoading}>{t('dashboard.editImage.removeButton')}</Button>}
+            {sourceImage && <Button variant="outline" size="sm" onClick={() => setSourceImage(null)} disabled={isLoading}>{t('dashboard.editImage.removeButton')}</Button>}
           </div>
 
           {/* Edited Image */}
           <div className="flex flex-col gap-2">
-             <h3 className="text-sm font-medium text-muted-foreground">{t('dashboard.editImage.editedImage')}</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">{t('dashboard.editImage.editedImage')}</h3>
             <div className="aspect-square w-full bg-card rounded-lg flex items-center justify-center overflow-hidden border relative group">
               {isLoading ? (
                 <Skeleton className="w-full h-full" />
@@ -153,10 +157,10 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
                   <div className="relative w-full h-full">
                     <Image src={editedImage} alt={prompt} layout="fill" objectFit="contain" />
                   </div>
-                   <Button 
+                  <Button
                     onClick={handleDownload}
-                    variant="outline" 
-                    size="icon" 
+                    variant="outline"
+                    size="icon"
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Download className="w-5 h-5" />
@@ -188,11 +192,9 @@ export function EditImageTool({ subscription, refreshSubscription }: ToolProps) 
           </Button>
         </form>
       </CardContent>
-       <CardFooter>
+      <CardFooter>
         {error && <p className="text-sm text-destructive">{error}</p>}
       </CardFooter>
     </Card>
   );
 }
-
-    
