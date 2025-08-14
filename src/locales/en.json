@@ -1,0 +1,492 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "userMenu": {
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "language": {
+    "title": "Select Language",
+    "en": "English",
+    "ar": "Arabic (العربية)"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "copyright": "© {{year}} NeuraForge. All Rights Reserved."
+  },
+  "home": {
+    "hero": {
+      "badge": "The AI Toolsmith of the Web",
+      "title": "NeuraForge AI Toolkit",
+      "subtitle": "Unleash your creativity with the latest AI toolkit. From instant image generation to high-accuracy audio transcription – everything you need to bring your ideas to life with speed and professionalism.",
+      "cta": "Get Started",
+      "demo": "Watch Demo"
+    },
+    "explore": {
+      "title": "Explore the Future of Creation",
+      "subtitle": "Our cutting-edge AI tools are designed to be intuitive, powerful, and ready for any challenge."
+    },
+    "tools": {
+      "textToImage": {
+        "title": "Text-to-Image",
+        "description": "Generate stunning visuals from simple text prompts."
+      },
+      "aiImageEditor": {
+        "title": "AI Image Editor",
+        "description": "Upload an image and describe the changes you want to make."
+      },
+      "watermarkRemover": {
+        "title": "Image Cleaner",
+        "description": "Automatically remove any unwanted objects from your images."
+      },
+      "aiEmailWriter": {
+        "title": "Email Writer",
+        "description": "Generate professional emails for any occasion in seconds."
+      },
+      "storyWriter": {
+        "title": "Story Writer",
+        "description": "Create captivating stories from a simple topic or outline."
+      },
+      "logoGenerator": {
+        "title": "Logo Generator",
+        "description": "Design unique logos for your brand instantly."
+      },
+      "generateCv": {
+        "title": "CV Generator",
+        "description": "Generate a professional, polished CV in minutes."
+      },
+      "textToVoice": {
+        "title": "Text-to-Voice",
+        "description": "Convert written text into natural-sounding speech."
+      },
+      "voiceAssistant": {
+        "title": "Voice Assistant",
+        "description": "Give voice commands to write emails, create stories, and more."
+      }
+    },
+    "innovators": {
+      "title": "Built for Innovators",
+      "subtitle": "NeuraForge provides a seamless and secure environment for all your AI-powered tasks. With Firebase integration, your data is safe and your experience is smooth.",
+      "feature1": "Secure Authentication via Firebase",
+      "feature2": "Firestore Database for reliable data storage",
+      "feature3": "Ready to scale for any workload",
+      "cta": "Sign Up Now"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About NeuraForge",
+      "subtitle": "We are on a mission to build the most intuitive and powerful AI tools, empowering creators and innovators worldwide."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "text": "At NeuraForge, we believe that the power of artificial intelligence should be a force for creativity and efficiency, accessible to everyone. Our vision is to break down the barriers of complexity, providing a suite of tools that feel less like software and more like a creative partner. We are dedicated to forging a future where your ideas are the only limit, and technology is the seamless bridge to bringing them to life."
+    },
+    "tools": {
+      "title": "A Suite of Powerful Tools",
+      "subtitle": "From generating stunning visuals to translating languages in an instant, our toolkit is designed for versatility and power.",
+      "textToImage": {
+        "title": "Text to Image",
+        "description": "Generate stunning visuals from text prompts."
+      },
+      "aiImageEditor": {
+        "title": "AI Image Editor",
+        "description": "Describe changes to edit your images."
+      },
+      "watermarkRemover": {
+        "title": "Image Cleaner",
+        "description": "Remove any unwanted objects from images."
+      },
+      "aiEmailWriter": {
+        "title": "AI Email Writer",
+        "description": "Generate professional emails in seconds."
+      },
+      "storyWriter": {
+        "title": "Story Writer",
+        "description": "Create captivating stories from a simple topic."
+      },
+      "logoGenerator": {
+        "title": "Logo Generator",
+        "description": "Design unique logos for your brand."
+      },
+       "generateCv": {
+        "title": "CV Generator",
+        "description": "Generate a professional, polished CV in minutes."
+      },
+      "textToVoice": {
+        "title": "Text to Voice",
+        "description": "Convert text into natural-sounding speech."
+      },
+      "voiceAssistant": {
+        "title": "Voice Assistant",
+        "description": "Give voice commands for various tasks."
+      }
+    },
+    "principles": {
+      "title": "Our Core Principles",
+      "subtitle": "These values guide our development process and our commitment to you.",
+      "innovation": {
+        "title": "Innovation",
+        "text": "We constantly explore the latest advancements in AI to bring you the most powerful and cutting-edge tools."
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "text": "Our tools are designed for everyone, from seasoned professionals to curious hobbyists, with an intuitive interface."
+      },
+      "performance": {
+        "title": "Performance",
+        "text": "Leveraging a robust infrastructure, we ensure a fast, secure, and scalable experience for all our users."
+      }
+    },
+    "cta": {
+      "title": "Ready to Start Creating?",
+      "subtitle": "Join thousands of creators and innovators. Explore the tools and unleash your potential today.",
+      "button": "Go to Dashboard"
+    }
+  },
+   "dashboard": {
+    "gallery": {
+      "title": "Gallery"
+    },
+    "upgrade": {
+      "title": "Free Limit Reached",
+      "description": "You've used all your free attempts. Please upgrade to continue using this tool.",
+      "button": "Upgrade"
+    },
+     "common": {
+      "download": "Download",
+      "downloadPdf": "Download PDF",
+      "copy": "Copy"
+    },
+    "logoGenerator": {
+      "title": "AI Logo Generator",
+      "description": "Describe your brand to generate a unique logo.",
+      "placeholder": "e.g., A coffee shop called 'The Daily Grind'",
+      "button": {
+        "default": "Generate Logo",
+        "loading": "Generating..."
+      },
+      "initialState": "Your generated logo will appear here.",
+      "error": {
+        "general": "Failed to generate logo. Please try again."
+      }
+    },
+    "storyWriter": {
+      "title": "AI Story Writer",
+      "description": "Bring your story ideas to life. Provide a topic and let the AI do the writing.",
+      "labels": {
+        "topic": "Topic / Theme",
+        "characters": "Characters (Optional)",
+        "plot": "Plot Outline (Optional)",
+        "pages": "Number of Pages (approx.)",
+        "generatedTitle": "Generated Title",
+        "generatedStory": "Generated Story"
+      },
+      "placeholders": {
+        "topic": "e.g., 'A space detective solves a mystery on Mars'",
+        "characters": "e.g., 'Jax, a grizzled android detective; Ava, a brilliant scientist with a secret.'",
+        "plot": "e.g., 'The story begins with a strange signal from a Martian cave. Jax discovers an alien artifact...'",
+        "pages": "Select number of pages"
+      },
+      "button": {
+        "default": "Write Story",
+        "loading": "Writing..."
+      },
+      "initialState": "Your generated story will appear here.",
+      "error": {
+        "general": "An error occurred. Please try again."
+      },
+      "toast": {
+        "copied": "Story copied to clipboard!",
+        "pdfErrorTitle": "PDF Generation Error",
+        "pdfErrorDescription": "Failed to generate PDF. Please try again."
+      }
+    },
+    "editImage": {
+      "title": "AI Image Editor",
+      "description": "Upload an image and describe the changes you want to make.",
+      "sourceImage": "Source Image",
+      "editedImage": "Edited Image",
+      "dropzone": "Drag & drop an image here, or click to select a file",
+      "removeButton": "Remove Image",
+      "initialState": "Your edited image will appear here.",
+      "placeholder": "e.g., 'make it pop-art style', 'add a hat on the cat'",
+      "button": {
+        "default": "Apply Edit",
+        "loading": "Editing..."
+      },
+      "error": {
+        "general": "Failed to edit image. Please try again."
+      }
+    },
+    "generateCv": {
+        "title": "AI CV Generator",
+        "description": "Fill in your details and let our AI craft a professional CV tailored to your target job.",
+        "form": {
+            "personal": "Personal Details",
+            "photo": "Profile Photo (Optional)",
+            "photoPrompt": "Drop an image or click to browse",
+            "targetJobTitle": "Target Job Title",
+            "targetJobTitlePlaceholder": "e.g., Senior Software Engineer",
+            "name": "Full Name",
+            "email": "Email",
+            "phone": "Phone Number",
+            "location": "Location (City, Country)",
+            "portfolio": "Portfolio/Website Link (Optional)",
+            "experience": "Work Experience",
+            "role": "Role/Position",
+            "company": "Company",
+            "dates": "Dates (e.g., Jan 2020 - Present)",
+            "responsibilities": "Responsibilities & Achievements",
+            "removeExperience": "Remove",
+            "addExperience": "Add Experience",
+            "education": "Education",
+            "degree": "Degree/Qualification",
+            "institution": "Institution",
+            "removeEducation": "Remove",
+            "addEducation": "Add Education",
+            "skills": "AI Generated Skills",
+            "skillsDescription": "Skills will be generated automatically by the AI based on your target job title and experience.",
+            "hobbies": "Hobbies (Optional)",
+            "hobbiesPlaceholder": "e.g., Photography, Hiking, Chess",
+            "volunteering": "Volunteering (Optional)",
+            "volunteeringPlaceholder": "Describe your volunteer experience...",
+            "references": "References (Optional)",
+            "referenceName": "Reference's Name",
+            "referenceDetails": "Reference's Details (e.g., Title, Company, Contact)",
+            "referenceDetailsPlaceholder": "e.g., CEO at ExampleCorp, john.doe@example.com",
+            "removeReference": "Remove",
+            "addReference": "Add Reference"
+        },
+        "button": {
+            "default": "Generate CV",
+            "loading": "Generating..."
+        },
+        "result": {
+            "title": "Your Generated CV",
+            "summary": "Professional Summary",
+            "experience": "Work Experience",
+            "education": "Education",
+            "skills": "Skills",
+            "initialState": "Your generated CV will appear here."
+        },
+        "error": {
+            "general": "Failed to generate CV. Please try again."
+        }
+    },
+    "generateEmail": {
+      "title": "AI Email Writer",
+      "description": "Generate professional emails for any occasion in seconds.",
+      "labels": {
+        "recipient": "Recipient",
+        "topic": "Topic / Purpose",
+        "tone": "Tone",
+        "notes": "Additional Notes (Optional)",
+        "subject": "Subject",
+        "body": "Body"
+      },
+      "placeholders": {
+        "recipient": "e.g., 'Hiring Manager', 'support@example.com'",
+        "topic": "e.g., 'Job Application for Software Engineer'",
+        "tone": "Select a tone",
+        "notes": "e.g., Mention my 5 years of experience with React..."
+      },
+      "tones": {
+        "formal": "Formal",
+        "casual": "Casual",
+        "persuasive": "Persuasive",
+        "friendly": "Friendly"
+      },
+      "button": {
+        "default": "Generate Email",
+        "loading": "Generating..."
+      },
+      "generatedEmail": "Generated Email",
+      "initialState": "Your generated email will appear here.",
+      "error": {
+        "general": "An error occurred. Please try again."
+      }
+    },
+    "removeWatermark": {
+      "title": "AI Image Cleaner",
+      "description": "Upload an image to automatically remove any unwanted objects or distractions.",
+      "originalImage": "Original Image",
+      "processedImage": "Processed Image",
+      "dropzone": "Drag & drop an image here, or click to select a file",
+      "removeButton": "Remove Image",
+      "initialState": "Your processed image will appear here.",
+      "button": {
+        "default": "Clean Image",
+        "loading": "Cleaning Image..."
+      },
+      "error": {
+        "general": "Failed to process image. Please try again."
+      }
+    },
+    "textToImage": {
+      "title": "Text-to-Image Generator",
+      "description": "Bring your ideas to life. Describe anything you can imagine.",
+      "placeholder": "e.g., A futuristic city skyline at dusk",
+      "button": {
+        "default": "Generate",
+        "loading": "Generating..."
+      },
+      "initialState": "Your generated image will appear here.",
+      "error": {
+        "general": "Failed to generate image. Please try again."
+      }
+    },
+    "textToVoice": {
+      "title": "Text-to-Voice Generator",
+      "description": "Convert any text into natural-sounding speech.",
+      "placeholder": "Enter text to convert to speech...",
+      "button": {
+        "default": "Generate Audio",
+        "loading": "Generating..."
+      },
+      "generatedAudio": "Generated Audio:",
+      "audioNotSupported": "Your browser does not support the audio element.",
+      "initialState": "Your generated audio will appear here.",
+      "error": {
+        "general": "Failed to generate audio. Please try again."
+      }
+    },
+    "voiceAssistant": {
+      "title": "AI Voice Assistant",
+      "description": "Just talk. Describe what you want the AI to do.",
+       "initialState": {
+          "p1": "The results of your voice commands will be displayed here.",
+          "p2": "e.g., 'Write a story about a dragon', 'Create an email to my manager about the project report'"
+       },
+       "results": {
+         "transcription": {
+           "title": "Transcription"
+         },
+         "email": {
+           "title": "Generate Email",
+           "recipient": "Recipient",
+           "topic": "Topic",
+           "generateButton": "Generate & Send Email"
+         },
+         "story": {
+           "title": "Write Story",
+           "topic": "Topic",
+           "generateButton": "Write Story"
+         },
+         "document": {
+            "title": "Generate Document",
+            "topic": "Topic",
+            "generateButton": "Generate Document"
+         }
+       }
+    },
+    "voiceToText": {
+      "title": "Voice-to-Text Transcription",
+      "description": "Record your voice and get an instant transcription.",
+      "button": {
+        "start": "Start Recording",
+        "stop": "Stop Recording"
+      },
+      "status": {
+        "permission": "Requesting microphone permission...",
+        "recording": "Recording... Click to stop.",
+        "transcribing": "Transcribing audio...",
+        "processing": "Processing your audio..."
+      },
+      "initialState": "Your transcription will appear here.",
+      "error": {
+        "micDenied": "Microphone access denied. Please enable it in your browser settings.",
+        "transcriptionFailed": "Failed to transcribe audio. Please try again."
+      }
+    },
+    "examples": {
+        "generateCv": {
+            "cta": "Try it Yourself"
+        }
+    }
+  },
+  "contact": {
+    "page": {
+      "title": "Contact Us",
+      "subtitle": "Have questions or feedback? We'd love to hear from you.",
+      "directEmailText": "You can also reach us directly at:"
+    },
+    "form": {
+      "title": "Send us a Message",
+      "description": "Fill out the form below and we'll get back to you as soon as possible.",
+      "name": {
+        "label": "Your Name",
+        "placeholder": "John Doe"
+      },
+      "email": {
+        "label": "Your Email",
+        "placeholder": "you@example.com"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Your message..."
+      },
+      "submit": "Send Message"
+    }
+  },
+  "checkout": {
+    "paymentNote": "Your subscription will be activated within 10 minutes of payment. If you face any issues with the payment, please contact support: support@neuraforge.com"
+  },
+  "subscriptions": {
+    "page": {
+      "title": "Our Pricing Plans",
+      "subtitle": "Choose the plan that's right for you and your projects."
+    },
+    "plans": {
+      "free": {
+        "name": "Free",
+        "period": "/ week",
+        "description": "Get started with our basic AI tools.",
+        "features": [
+          "5 free attempts per tool per week",
+          "Access to all tools",
+          "Standard model access",
+          "Community support"
+        ],
+        "cta": "Start for Free"
+      },
+      "monthly": {
+        "name": "Monthly",
+        "period": "/ month",
+        "description": "For professionals and power users.",
+        "features": [
+          "35 attempts per tool per month",
+          "Access to all tools",
+          "Advanced AI models",
+          "No watermarks on generated images",
+          "Priority support"
+        ],
+        "cta": "Upgrade to Monthly"
+      },
+      "yearly": {
+        "name": "Yearly",
+        "period": "/ year",
+        "description": "For teams and businesses that need it all.",
+        "features": [
+          "Unlimited attempts on all tools",
+          "Access to all tools & future updates",
+          "Advanced AI models",
+          "No watermarks on generated images",
+          "Dedicated 24/7 support"
+        ],
+        "cta": "Go Yearly"
+      }
+    }
+  }
+}
