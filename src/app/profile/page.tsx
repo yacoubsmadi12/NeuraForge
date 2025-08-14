@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,11 +10,19 @@ import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { getSubscription } from "@/lib/subscription-service";
-import type { Subscription } from "@/lib/subscription-constants";
-import { ALL_TOOLS, PLAN_LIMITS } from "@/lib/subscription-constants";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase"; // تأكد مسار الـ Firestore هنا
+import { ALL_TOOLS } from "@/lib/subscription-constants";
 import { ManageSubscriptionDialog } from "./components/manage-subscription-dialog";
 
+type Subscription = {
+  plan: string;
+  limit: number;
+  status: string;
+  renewalDate: number | null;
+  usage: Record<string, number>;
+  lastReset: number;
+};
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
@@ -23,6 +30,26 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const getSubscription = async (uid: string) => {
+    const subRef = doc(db, "subscriptions", uid);
+    const subSnap = await getDoc(subRef);
+
+    if (subSnap.exists()) {
+      return subSnap.data() as Subscription;
+    } else {
+      // إنشاء مستند Free تلقائي
+      const freeSub: Subscription = {
+        plan: "Free",
+        limit: 5,
+        status: "active",
+        renewalDate: null,
+        usage: {},
+        lastReset: Date.now()
+      };
+      await setDoc(subRef, freeSub);
+      return freeSub;
+    }
+  };
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -39,7 +66,7 @@ export default function ProfilePage() {
 
   const isLoading = authLoading || loading;
 
-  if (isLoading || !user || !subscription) {
+  if (isLoading || !user) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -47,10 +74,18 @@ export default function ProfilePage() {
     );
   }
 
+  if (!subscription) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-muted-foreground">No subscription data found.</p>
+      </div>
+    );
+  }
+
   const renewalDateString = subscription.renewalDate 
     ? new Date(subscription.renewalDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     : 'N/A';
-  
+
   const getToolName = (toolId: string) => {
     return toolId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   }
