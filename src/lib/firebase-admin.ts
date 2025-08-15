@@ -1,14 +1,16 @@
 // src/lib/firebase-admin.ts
-import admin from "firebase-admin";
+import { initializeApp, cert, getApps, getApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT as string
+);
+
+// Check if an app is already initialized to avoid re-initializing
+if (!getApps().length) {
+  initializeApp({
+    credential: cert(serviceAccount),
   });
 }
 
-export default admin;
+export const auth = getAuth();
