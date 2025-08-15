@@ -1,4 +1,3 @@
-
 'use server';
 
 /**
@@ -9,9 +8,13 @@
  * - LogoGeneratorOutput - The return type for the logoGenerator function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 import { saveGeneratedImage } from '@/lib/image-storage';
+// --- ADDED IMPORTS ---
+import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+// ---------------------
 
 const LogoGeneratorInputSchema = z.object({
   prompt: z.string().describe('The text prompt to generate a logo from.'),
@@ -35,46 +38,73 @@ const logoGeneratorFlow = ai.defineFlow(
     outputSchema: LogoGeneratorOutputSchema,
   },
   async (input) => {
+    const serviceId = 'logoGenerator';
+    
+    // --- ADDED CREDIT CHECK LOGIC ---
+    if (!input.userId) {
+      throw new Error("User not authenticated.");
+    }
+
+    const subscriptionRef = doc(db, 'subscriptions', input.userId);
+    const subscriptionSnap = await getDoc(subscriptionRef);
+
+    if (!subscriptionSnap.exists()) {
+      throw new Error("Subscription not found for this user.");
+    }
+
+    const subscriptionData = subscriptionSnap.data();
+    const usageCount = subscriptionData.usage?.[serviceId] || 0;
+    const limit = subscriptionData.limit;
+
+    if (subscriptionData.plan !== 'Unlimited' && usageCount >= limit) {
+      throw new Error("Insufficient credit. Please upgrade your plan.");
+    }
+    // ----------------------------------
+
     try {
-      const {media} = await ai.generate({
+      const { media } = await ai.generate({
         model: 'googleai/gemini-2.0-flash-preview-image-generation',
         prompt: `A modern, minimalist logo for a company with the theme: "${input.prompt}". The logo should be simple, clean, suitable for a brand, and on a solid background.`,
         config: {
           responseModalities: ['TEXT', 'IMAGE'],
           safetySettings: [
             {
-                category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                threshold: 'BLOCK_ONLY_HIGH',
+              category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+              threshold: 'BLOCK_ONLY_HIGH',
             },
             {
-                category: 'HARM_CATEGORY_HATE_SPEECH',
-                threshold: 'BLOCK_ONLY_HIGH',
+              category: 'HARM_CATEGORY_HATE_SPEECH',
+              threshold: 'BLOCK_ONLY_HIGH',
             },
             {
-                category: 'HARM_CATEGORY_HARASSMENT',
-                threshold: 'BLOCK_ONLY_HIGH',
+              category: 'HARM_CATEGORY_HARASSMENT',
+              threshold: 'BLOCK_ONLY_HIGH',
             },
             {
-                category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                threshold: 'BLOCK_ONLY_HIGH',
+              category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+              threshold: 'BLOCK_ONLY_HIGH',
             },
           ]
         },
       });
 
+      // --- DEDUCT CREDIT AFTER SUCCESSFUL GENERATION ---
+      await updateDoc(subscriptionRef, {
+        [`usage.${serviceId}`]: increment(1),
+      });
+      // ------------------------------------------------
+
       if (media?.url && input.userId) {
         try {
           await saveGeneratedImage(input.userId, media.url, input.prompt);
         } catch (error) {
-            // Log the error but don't prevent the image from being returned to the user.
-            console.error("Failed to save image to gallery:", error);
+          console.error("Failed to save image to gallery:", error);
         }
       }
 
-      return {imageUrl: media?.url ?? null};
+      return { imageUrl: media?.url ?? null };
     } catch (error: any) {
       console.error('Error generating logo:', error.message);
-      // Re-throw a more informative error to be handled by the client
       throw new Error(error.message || 'The AI service is currently unavailable. Please try again later.');
     }
   }
