@@ -1,25 +1,13 @@
 'use server';
 
-/**
- * @fileOverview An AI agent for generating documents like letters or articles.
- *
- * - generateDocument - A function that handles the document generation process.
- * - GenerateDocumentInput - The input type for the generateDocument function.
- * - GenerateDocumentOutput - The return type for the generateDocument function.
- */
-
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
-// --- ADDED IMPORTS ---
-import { getAuth } from 'firebase-admin/auth';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { auth } from '@/lib/firebase-admin';
-// ---------------------
+import { getAuth } from 'firebase-admin/auth'; // Corrected import
 
-// --- ADDED HELPER FUNCTION ---
 const checkAndIncrementUsage = async (serviceId: string) => {
-  const user = await auth().currentUser;
+  const user = await getAuth().currentUser; // Corrected usage
   if (!user) {
     throw new Error("User not authenticated.");
   }
@@ -43,7 +31,6 @@ const checkAndIncrementUsage = async (serviceId: string) => {
     [`usage.${serviceId}`]: increment(1),
   });
 };
-// -----------------------------
 
 const GenerateDocumentInputSchema = z.object({
   topic: z.string().describe('The main topic or purpose of the document.'),
@@ -81,7 +68,7 @@ const generateDocumentFlow = ai.defineFlow(
   async (input) => {
     try {
       const serviceId = "generateDocument";
-      await checkAndIncrementUsage(serviceId); // --- ADDED CHECK ---
+      await checkAndIncrementUsage(serviceId);
       const { output } = await prompt(input);
       return output!;
     } catch (error: any) {
