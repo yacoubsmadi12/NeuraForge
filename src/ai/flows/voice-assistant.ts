@@ -15,7 +15,7 @@ const VoiceAssistantInputSchema = z.object({
   audioDataUri: z
     .string()
     .describe(
-      "Audio data as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "Audio data as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'.",
     ),
   languageCode: z.enum(['en', 'ar']).describe('The language of the audio.'),
 });
@@ -68,6 +68,28 @@ const voiceAssistantFlow = ai.defineFlow(
     } catch (error) {
       console.error('Error with voice assistant:', error);
       throw new Error('The AI service is currently unavailable. Please try again later.');
+    }
+  },
+  {
+    config: {
+      safetySettings: [
+        {
+          category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+          threshold: 'BLOCK_ONLY_HIGH',
+        },
+        {
+          category: 'HARM_CATEGORY_HATE_SPEECH',
+          threshold: 'BLOCK_ONLY_HIGH',
+        },
+        {
+          category: 'HARM_CATEGORY_HARASSMENT',
+          threshold: 'BLOCK_ONLY_HIGH',
+        },
+        {
+          category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+          threshold: 'BLOCK_ONLY_HIGH',
+        },
+      ]
     }
   }
 );
