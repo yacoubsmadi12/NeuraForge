@@ -8,8 +8,42 @@
  * - GenerateEmailOutput - The return type for the generateEmail function.
  */
 
-import {ai} from '@/ai/genkit';
+import { ai } from '@/ai/genkit';
 import { GenerateEmailInputSchema, GenerateEmailOutputSchema, type GenerateEmailInput, type GenerateEmailOutput } from './schemas/generate-email';
+// --- ADDED IMPORTS ---
+import { getAuth } from 'firebase-admin/auth';
+import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { auth } from '@/lib/firebase-admin';
+// ---------------------
+
+// --- ADDED HELPER FUNCTION ---
+const checkAndIncrementUsage = async (serviceId: string) => {
+  const user = await auth().currentUser;
+  if (!user) {
+    throw new Error("User not authenticated.");
+  }
+
+  const subscriptionRef = doc(db, 'subscriptions', user.uid);
+  const subscriptionSnap = await getDoc(subscriptionRef);
+
+  if (!subscriptionSnap.exists()) {
+    throw new Error("Subscription not found for this user.");
+  }
+
+  const subscriptionData = subscriptionSnap.data();
+  const usageCount = subscriptionData.usage?.[serviceId] || 0;
+  const limit = subscriptionData.limit;
+
+  if (subscriptionData.plan !== 'Unlimited' && usageCount >= limit) {
+    throw new Error("Insufficient credit. Please upgrade your plan.");
+  }
+
+  await updateDoc(subscriptionRef, {
+    [`usage.${serviceId}`]: increment(1),
+  });
+};
+// -----------------------------
 
 export async function generateEmail(input: GenerateEmailInput): Promise<GenerateEmailOutput> {
   return generateEmailFlow(input);
@@ -17,8 +51,8 @@ export async function generateEmail(input: GenerateEmailInput): Promise<Generate
 
 const prompt = ai.definePrompt({
   name: 'generateEmailPrompt',
-  input: {schema: GenerateEmailInputSchema},
-  output: {schema: GenerateEmailOutputSchema},
+  input: { schema: GenerateEmailInputSchema },
+  output: { schema: GenerateEmailOutputSchema },
   prompt: `You are an expert email writing assistant. Your task is to generate a professional and effective email based on the user's requirements.
 
 Recipient: {{recipient}}
@@ -40,11 +74,13 @@ const generateEmailFlow = ai.defineFlow(
   },
   async input => {
     try {
-      const {output} = await prompt(input);
+      const serviceId = "generateEmail";
+      await checkAndIncrementUsage(serviceId); // --- ADDED CHECK ---
+      const { output } = await prompt(input);
       return output!;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating email:', error);
-      throw new Error('The AI service is currently unavailable. Please try again later.');
+      throw new Error(error.message || 'The AI service is currently unavailable. Please try again later.');
     }
   }
 );
