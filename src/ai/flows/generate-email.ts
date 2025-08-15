@@ -1,25 +1,13 @@
 'use server';
 
-/**
- * @fileOverview An AI agent for generating email content.
- *
- * - generateEmail - A function that handles the email generation process.
- * - GenerateEmailInput - The input type for the generateEmail function.
- * - GenerateEmailOutput - The return type for the generateEmail function.
- */
-
 import { ai } from '@/ai/genkit';
 import { GenerateEmailInputSchema, GenerateEmailOutputSchema, type GenerateEmailInput, type GenerateEmailOutput } from './schemas/generate-email';
-// --- ADDED IMPORTS ---
-import { getAuth } from 'firebase-admin/auth';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { auth } from '@/lib/firebase-admin';
-// ---------------------
+import { getAuth } from 'firebase-admin/auth'; // Corrected import
 
-// --- ADDED HELPER FUNCTION ---
 const checkAndIncrementUsage = async (serviceId: string) => {
-  const user = await auth().currentUser;
+  const user = await getAuth().currentUser; // Corrected usage
   if (!user) {
     throw new Error("User not authenticated.");
   }
@@ -43,7 +31,6 @@ const checkAndIncrementUsage = async (serviceId: string) => {
     [`usage.${serviceId}`]: increment(1),
   });
 };
-// -----------------------------
 
 export async function generateEmail(input: GenerateEmailInput): Promise<GenerateEmailOutput> {
   return generateEmailFlow(input);
@@ -75,7 +62,7 @@ const generateEmailFlow = ai.defineFlow(
   async input => {
     try {
       const serviceId = "generateEmail";
-      await checkAndIncrementUsage(serviceId); // --- ADDED CHECK ---
+      await checkAndIncrementUsage(serviceId);
       const { output } = await prompt(input);
       return output!;
     } catch (error: any) {
