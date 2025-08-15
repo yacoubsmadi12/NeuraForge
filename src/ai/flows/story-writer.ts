@@ -1,25 +1,13 @@
 'use server';
 
-/**
- * @fileOverview An AI agent for writing stories.
- *
- * - storyWriter - A function that handles the story writing process.
- * - StoryWriterInput - The input type for the storyWriter function.
- * - StoryWriterOutput - The return type for the storyWriter function.
- */
-
 import { ai } from '@/ai/genkit';
 import { StoryWriterInputSchema, StoryWriterOutputSchema, type StoryWriterInput, type StoryWriterOutput } from './schemas/story-writer';
-// --- ADDED IMPORTS ---
-import { getAuth } from 'firebase-admin/auth';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { auth } from '@/lib/firebase-admin';
-// ---------------------
+import { getAuth } from 'firebase-admin/auth'; // Corrected import
 
-// --- ADDED HELPER FUNCTION ---
 const checkAndIncrementUsage = async (serviceId: string) => {
-  const user = await auth().currentUser;
+  const user = await getAuth().currentUser; // Corrected usage
   if (!user) {
     throw new Error("User not authenticated.");
   }
@@ -43,7 +31,6 @@ const checkAndIncrementUsage = async (serviceId: string) => {
     [`usage.${serviceId}`]: increment(1),
   });
 };
-// -----------------------------
 
 export async function storyWriter(input: StoryWriterInput): Promise<StoryWriterOutput> {
   return storyWriterFlow(input);
@@ -79,7 +66,7 @@ const storyWriterFlow = ai.defineFlow(
   async input => {
     try {
       const serviceId = "storyWriter";
-      await checkAndIncrementUsage(serviceId); // --- ADDED CHECK ---
+      await checkAndIncrementUsage(serviceId);
       const { output } = await prompt(input);
       return output!;
     } catch (error: any) {
